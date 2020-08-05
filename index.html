@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html>
+    <style>
+        body{
+            
+            vertical-align: middle;
+            
+
+        }
+  
+        .grid-container{
+
+            font-size: 0;
+            height:600px;
+            width:600px;
+            margin: auto;
+            border: solid;
+            border: 5px 5px; 
+        }
+        
+        .cell{
+           
+            display: inline-block;
+            background-color: white;
+        }
+
+        .cell-onHover{
+            background-color: black;
+        }
+    </style>
+
+    <head>
+        <title>etch a sketch</title>
+    </head>
+
+    <body>
+        
+        
+        <div class="grid-container">
+            
+        </div> 
+
+        <form>
+            <label for="gridlab">Enter the grid size (1-100):</label>
+            <input type="number" id = "gridSubmissionSpace"name="gridSize" min="1" max="100">
+            <input type="button" id="submission" value="Change grid size">
+        </form>
+
+        <script>
+            var gridSize = 16;
+            
+            function addButtonFunctionality(){
+                const btn = document.querySelector('#submission');
+               
+                btn.addEventListener('click', () => {
+                    
+                    removeGrid();
+                    gridSize = document.getElementById('gridSubmissionSpace').value;
+                    console.log(gridSize);
+                    makeGrid();
+                    changeColorOnHover();
+                });
+                
+            }
+
+            function changeColorOnHover(){
+                const cell = document.getElementsByClassName('cell');
+                
+                for(let i=0;i<cell.length;i++){
+                    cell[i].addEventListener('mouseover', ()=> {
+                        
+                        cell[i].classList.add('cell-onHover');
+                    });
+                }
+
+            }
+
+            /*function inputGridSize(){
+                const button = document.querySelector("#submission");
+                gGrid = document.getElementById('gridSubmissionSpace').value;
+                console.log(gGrid);
+                makeGrid();
+            }*/
+
+            function removeGrid(){
+                let gridContainer = document.querySelector('.grid-container');
+                let gridElement = document.getElementsByClassName('cell');
+                
+                /*for(let i=0;i<gridSize*gridSize;i++){
+                    let gridElement = document.getElementsByClassName('cell');
+                    gridElement.gridContainer.removeChild(gridElement);
+                }*/
+                console.log(gridContainer);
+                console.log(gridContainer.childElementCount);
+                /*while(gridElement.length>0){
+                    gridElement[0].gridContainer.removeChild(gridElement[0]);
+                }nie wiem dlaczego tutaj jest undefined*/
+                document.querySelectorAll('.cell').forEach(function(e){
+                    e.remove();
+                })
+
+
+                console.log(gridElement.length);
+            }
+            
+            function makeGrid(){
+                
+                let gridContainer = document.querySelector('.grid-container');
+                let containerHeight = gridContainer.offsetHeight;
+                let containerWidth = gridContainer.offsetWidth;
+                
+                for(i=0;i<gridSize*gridSize;i++){
+                    let gridElement = document.createElement('div');
+                    gridElement.classList.add('cell');
+                    gridElement.setAttribute('style', `height: ${(containerHeight-5)/gridSize}px; width: ${(containerWidth-5)/gridSize}px`) //odejmowane 5 to wielkosc ramki
+                    gridContainer.appendChild(gridElement);
+                }
+            }    
+            makeGrid();
+            changeColorOnHover();
+            addButtonFunctionality();
+            
+        </script>
+    </body>
+</html>
