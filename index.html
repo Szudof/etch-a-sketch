@@ -5,6 +5,7 @@
         body{
             
             vertical-align: middle;
+            background-color: rgb(54, 54, 54);
             
 
         }
@@ -14,7 +15,7 @@
             font-size: 0;
             height:600px;
             width:600px;
-            margin: auto;
+            margin: 10px auto 10px auto;
             border: solid;
             border: 5px 5px; 
         }
@@ -23,11 +24,38 @@
            
             display: inline-block;
             background-color: white;
+            outline: 1px solid black;
         }
 
         .cell-onHover{
             background-color: black;
         }
+
+        .cell-onHoverRainbowMode{
+            
+        }
+
+        .rainbowModeOn{
+            background-color: red;
+        }
+
+        .gridSizeChanger{
+            text-align: center;
+        }
+
+        #rainbowModeContainer{
+            text-align: center;
+
+        }
+
+        #rainbowModebtn{
+            width: 200px;
+            height: 50px;
+        }
+
+  
+        
+
     </style>
 
     <head>
@@ -35,22 +63,32 @@
     </head>
 
     <body>
-        
-        
-        <div class="grid-container">
-            
-        </div> 
 
-        <form>
-            <label for="gridlab">Enter the grid size (1-100):</label>
-            <input type="number" id = "gridSubmissionSpace"name="gridSize" min="1" max="100">
+        <form class = "gridSizeChanger">
+            <label for="gridlab" style = "color: white">Enter the grid size:</label>
+            <input type="number" id = "gridSubmissionSpace" name="gridSize" min="1" max="100" value ="16">
             <input type="button" id="submission" value="Change grid size">
         </form>
 
+
+        <div class="grid-container"></div> 
+
+        <div id ="rainbowModeContainer">
+            <input type="button" id="rainbowModebtn" value="Rainbow!">
+        </div>
+
+
         <script>
             var gridSize = 16;
+            var rainbow = false;
             
-            function addButtonFunctionality(){
+
+            function firstInitialization(){
+                makeGrid();
+                changeColorOnHover();
+            }
+
+            function addGridButtonFunctionality(){
                 const btn = document.querySelector('#submission');
                
                 btn.addEventListener('click', () => {
@@ -60,11 +98,66 @@
                     console.log(gridSize);
                     makeGrid();
                     changeColorOnHover();
+            
+        
                 });
                 
             }
 
+            function addRainbowButtonFunctionality(){
+                const btn = document.querySelector('#rainbowModebtn');
+                
+
+                btn.addEventListener('click', () => {
+                    if(rainbow == false)
+                    {
+                        rainbow = true;
+                        btn.style.backgroundImage = 'linear-gradient(40deg, #00C0FF 0%, #FFCF00 49%, #FC4F4F 80%, #00C0FF 100%)';
+
+                    }
+                    else
+                    {
+                        rainbow = false;
+                        btn.style.backgroundImage = null;
+                    }
+                    console.log(rainbow);
+                });
+            }
+
             function changeColorOnHover(){
+                const cell = document.getElementsByClassName('cell');
+                const filled = [];
+                
+            
+                    for(let i=0;i<cell.length;i++){
+                        
+                        cell[i].addEventListener('mouseover', ()=> {
+                            //cell[i].classList.remove('cell-onHoverRainbowMode');
+                            //cell[i].classList.add('cell-onHover');
+                            if(rainbow == false && filled[i] != true)
+                            {
+                                cell[i].style.backgroundColor = 'black';
+                                filled[i] = true;
+                            }
+                            else if(rainbow == true && filled[i] != true)
+                            {
+                                cell[i].style.backgroundColor = 'rgb(' + colorRandomizer(255,0) + ',' + colorRandomizer(255,0) + ',' + colorRandomizer(255,0) + ')';
+                                filled[i] = true;
+                            }
+                            console.log('ale jaja');
+                            console.log(cell[i].style.backgroundColor);
+                        });
+                    }
+                
+ 
+
+            }
+
+            function colorRandomizer(max,min){
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            /*function changeColorOnHoverRainbowMode(){
                 const cell = document.getElementsByClassName('cell');
                 
                 for(let i=0;i<cell.length;i++){
@@ -74,7 +167,7 @@
                     });
                 }
 
-            }
+            }*/
 
             /*function inputGridSize(){
                 const button = document.querySelector("#submission");
@@ -117,9 +210,9 @@
                     gridContainer.appendChild(gridElement);
                 }
             }    
-            makeGrid();
-            changeColorOnHover();
-            addButtonFunctionality();
+            firstInitialization();
+            addRainbowButtonFunctionality();
+            addGridButtonFunctionality();
             
         </script>
     </body>
