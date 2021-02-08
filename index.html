@@ -157,38 +157,15 @@
                 return Math.floor(Math.random() * (max - min + 1)) + min;
             }
 
-            /*function changeColorOnHoverRainbowMode(){
-                const cell = document.getElementsByClassName('cell');
-                
-                for(let i=0;i<cell.length;i++){
-                    cell[i].addEventListener('mouseover', ()=> {
-                        
-                        cell[i].classList.add('cell-onHover');
-                    });
-                }
-
-            }*/
-
-            /*function inputGridSize(){
-                const button = document.querySelector("#submission");
-                gGrid = document.getElementById('gridSubmissionSpace').value;
-                console.log(gGrid);
-                makeGrid();
-            }*/
-
+ 
             function removeGrid(){
                 let gridContainer = document.querySelector('.grid-container');
                 let gridElement = document.getElementsByClassName('cell');
                 
-                /*for(let i=0;i<gridSize*gridSize;i++){
-                    let gridElement = document.getElementsByClassName('cell');
-                    gridElement.gridContainer.removeChild(gridElement);
-                }*/
+   
                 console.log(gridContainer);
                 console.log(gridContainer.childElementCount);
-                /*while(gridElement.length>0){
-                    gridElement[0].gridContainer.removeChild(gridElement[0]);
-                }nie wiem dlaczego tutaj jest undefined*/
+             
                 document.querySelectorAll('.cell').forEach(function(e){
                     e.remove();
                 })
@@ -206,7 +183,7 @@
                 for(i=0;i<gridSize*gridSize;i++){
                     let gridElement = document.createElement('div');
                     gridElement.classList.add('cell');
-                    gridElement.setAttribute('style', `height: ${(containerHeight-5)/gridSize}px; width: ${(containerWidth-5)/gridSize}px`) //odejmowane 5 to wielkosc ramki
+                    gridElement.setAttribute('style', `height: ${(containerHeight-5)/gridSize}px; width: ${(containerWidth-5)/gridSize}px`) 
                     gridContainer.appendChild(gridElement);
                 }
             }    
